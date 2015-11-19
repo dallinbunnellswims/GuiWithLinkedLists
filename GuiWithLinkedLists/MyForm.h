@@ -1,4 +1,6 @@
 #pragma once
+#include <string>
+#include "LinkedList.h"
 
 namespace GuiWithLinkedLists {
 
@@ -162,6 +164,7 @@ namespace GuiWithLinkedLists {
 			this->center_pic->Size = System::Drawing::Size(201, 202);
 			this->center_pic->TabIndex = 11;
 			this->center_pic->TabStop = false;
+			
 			// 
 			// MyForm
 			// 
@@ -184,6 +187,10 @@ namespace GuiWithLinkedLists {
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->center_pic))->EndInit();
 			this->ResumeLayout(false);
 			this->PerformLayout();
+
+			PictureNode *initialPicture = new PictureNode;
+			initialPicture->picturePath = "C:\\Users\\bunnedal000\\Desktop\\twitter-profile-pic_400x400";
+			
 
 		}
 #pragma endregion
