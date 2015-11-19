@@ -1,15 +1,17 @@
 #include "LinkedList.h"
+#include "MyForm.h"
 
 
 
 LinkedList::LinkedList()
-{
-}
+{}
 LinkedList::~LinkedList()
 {}
-void LinkedList::add(std::string value)
-{}
-void LinkedList::insert(int pos, std::string value)
+void LinkedList::add(std::string path)
+{
+	
+}
+void LinkedList::insert(int pos, std::string path)
 {}
 void LinkedList::remove(int pos)
 {}
