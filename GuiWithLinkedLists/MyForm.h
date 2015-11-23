@@ -188,9 +188,7 @@ namespace GuiWithLinkedLists {
 			this->ResumeLayout(false);
 			this->PerformLayout();
 
-			PictureNode *initialPicture = new PictureNode;
-			initialPicture->picturePath = "C:\\Users\\bunnedal000\\Desktop\\twitter-profile-pic_400x400";
-			
+					
 
 		}
 #pragma endregion
