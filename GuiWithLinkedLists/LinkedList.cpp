@@ -55,9 +55,33 @@ void LinkedList::insert(int pos, std::string path)//inserts a picture at a given
 	
 	
 }
-void LinkedList::remove(int pos)
+void LinkedList::remove(int pos)//removes a picture at a position
 {
-
+	PictureNode *one_to_remove = new PictureNode;
+	one_to_remove = walkToPosition(pos);
+	if (one_to_remove->next != 0 && one_to_remove->prev != 0)
+	{
+		one_to_remove->prev->next = one_to_remove->next;
+		one_to_remove->next->prev = one_to_remove->prev;
+		one_to_remove->next = 0;
+		one_to_remove->prev = 0;
+		delete one_to_remove;
+	}
+	if (one_to_remove->next == 0 && one_to_remove->prev == 0)
+	{
+		delete one_to_remove;
+	}
+	if (one_to_remove->next != 0 && one_to_remove->prev == 0)
+	{
+		one_to_remove->next->prev = 0;
+		delete one_to_remove;
+	}
+	if (one_to_remove->prev != 0 && one_to_remove->next == 0)
+	{
+		one_to_remove->prev->next = 0;
+		delete one_to_remove;
+	}
+	
 }
 void LinkedList::set(int pos, std::string value) //sets a new path to a picure at a certain position
 {

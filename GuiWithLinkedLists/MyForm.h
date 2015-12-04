@@ -164,7 +164,6 @@ namespace GuiWithLinkedLists {
 			this->center_pic->Size = System::Drawing::Size(201, 202);
 			this->center_pic->TabIndex = 11;
 			this->center_pic->TabStop = false;
-			
 			// 
 			// MyForm
 			// 
@@ -182,18 +181,27 @@ namespace GuiWithLinkedLists {
 			this->Controls->Add(this->label1);
 			this->Name = L"MyForm";
 			this->Text = L"MyForm";
+			this->Load += gcnew System::EventHandler(this, &MyForm::MyForm_Load);
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->left_pic))->EndInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->right_pic))->EndInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->center_pic))->EndInit();
 			this->ResumeLayout(false);
 			this->PerformLayout();
 
-					
-
 		}
 #pragma endregion
-
-private: System::Void pictureBox1_Click(System::Object^  sender, System::EventArgs^  e) {
+System::String^ s2s(std::string  str) 
+{
+	return gcnew System::String(str.c_str());
 }
+
+
+std::string s2s(System::String^ str) 
+{
+	return msclr::interop::marshal_as<std::string>(str);
+}
+
+
+
 };
 }
