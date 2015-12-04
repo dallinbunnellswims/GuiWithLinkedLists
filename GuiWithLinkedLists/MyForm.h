@@ -1,6 +1,9 @@
 #pragma once
 #include <string>
 #include "LinkedList.h"
+#include <iostream>
+#include <msclr\marshal_cppstd.h>
+#include <fstream>
 
 namespace GuiWithLinkedLists {
 
@@ -24,6 +27,8 @@ namespace GuiWithLinkedLists {
 			//TODO: Add the constructor code here
 			//
 		}
+	//private:
+		//LinkedList picture_list;
 
 	protected:
 		/// <summary>
@@ -57,6 +62,7 @@ namespace GuiWithLinkedLists {
 	private: System::Windows::Forms::PictureBox^  left_pic;
 	private: System::Windows::Forms::PictureBox^  right_pic;
 	private: System::Windows::Forms::PictureBox^  center_pic;
+	private: System::Windows::Forms::OpenFileDialog^  openFileDialog1;
 
 
 	private:
@@ -81,6 +87,7 @@ namespace GuiWithLinkedLists {
 			this->left_pic = (gcnew System::Windows::Forms::PictureBox());
 			this->right_pic = (gcnew System::Windows::Forms::PictureBox());
 			this->center_pic = (gcnew System::Windows::Forms::PictureBox());
+			this->openFileDialog1 = (gcnew System::Windows::Forms::OpenFileDialog());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->left_pic))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->right_pic))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->center_pic))->BeginInit();
@@ -140,6 +147,7 @@ namespace GuiWithLinkedLists {
 			this->add_button->TabIndex = 8;
 			this->add_button->Text = L"Add";
 			this->add_button->UseVisualStyleBackColor = true;
+			this->add_button->Click += gcnew System::EventHandler(this, &MyForm::add_button_Click);
 			// 
 			// left_pic
 			// 
@@ -164,6 +172,10 @@ namespace GuiWithLinkedLists {
 			this->center_pic->Size = System::Drawing::Size(201, 202);
 			this->center_pic->TabIndex = 11;
 			this->center_pic->TabStop = false;
+			// 
+			// openFileDialog1
+			// 
+			this->openFileDialog1->FileName = L"openFileDialog1";
 			// 
 			// MyForm
 			// 
@@ -203,5 +215,12 @@ std::string s2s(System::String^ str)
 
 
 
+private: System::Void add_button_Click(System::Object^  sender, System::EventArgs^  e) {
+	PictureNode *temp_node = new PictureNode;
+	if (openFileDialog1->ShowDialog() == System::Windows::Forms::DialogResult::Cancel)
+		return;
+	temp_node->picturePath = s2s(this->openFileDialog1->FileName);
+
+}
 };
 }
