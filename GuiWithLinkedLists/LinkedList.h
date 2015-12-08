@@ -5,7 +5,7 @@ struct PictureNode {
 	PictureNode *next;
 	PictureNode *prev;
 };
-class LinkedList
+ref class LinkedList
 {
 private:
 	PictureNode *head;

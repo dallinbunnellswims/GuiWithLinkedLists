@@ -27,8 +27,9 @@ namespace GuiWithLinkedLists {
 			//TODO: Add the constructor code here
 			//
 		}
-	//private:
-		//LinkedList picture_list;
+	private:
+	LinkedList picture_list;
+	int current_position = 0;
 
 	protected:
 		/// <summary>
@@ -42,6 +43,8 @@ namespace GuiWithLinkedLists {
 			}
 		}
 
+	protected:
+
 
 	protected:
 
@@ -49,8 +52,9 @@ namespace GuiWithLinkedLists {
 
 
 
-	private: System::Windows::Forms::Label^  label1;
-	private: System::Windows::Forms::Label^  label2;
+
+
+
 	private: System::Windows::Forms::Button^  previous_button;
 	private: System::Windows::Forms::Button^  next_button;
 
@@ -78,8 +82,6 @@ namespace GuiWithLinkedLists {
 		/// </summary>
 		void InitializeComponent(void)
 		{
-			this->label1 = (gcnew System::Windows::Forms::Label());
-			this->label2 = (gcnew System::Windows::Forms::Label());
 			this->previous_button = (gcnew System::Windows::Forms::Button());
 			this->next_button = (gcnew System::Windows::Forms::Button());
 			this->remove_button = (gcnew System::Windows::Forms::Button());
@@ -92,25 +94,6 @@ namespace GuiWithLinkedLists {
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->right_pic))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->center_pic))->BeginInit();
 			this->SuspendLayout();
-			// 
-			// label1
-			// 
-			this->label1->AutoSize = true;
-			this->label1->Location = System::Drawing::Point(115, 222);
-			this->label1->Name = L"label1";
-			this->label1->Size = System::Drawing::Size(84, 13);
-			this->label1->TabIndex = 3;
-			this->label1->Text = L"Previous Picture";
-			this->label1->Click += gcnew System::EventHandler(this, &MyForm::label1_Click);
-			// 
-			// label2
-			// 
-			this->label2->AutoSize = true;
-			this->label2->Location = System::Drawing::Point(528, 222);
-			this->label2->Name = L"label2";
-			this->label2->Size = System::Drawing::Size(65, 13);
-			this->label2->TabIndex = 4;
-			this->label2->Text = L"Next Picture";
 			// 
 			// previous_button
 			// 
@@ -129,6 +112,7 @@ namespace GuiWithLinkedLists {
 			this->next_button->TabIndex = 6;
 			this->next_button->Text = L"Next";
 			this->next_button->UseVisualStyleBackColor = true;
+			this->next_button->Click += gcnew System::EventHandler(this, &MyForm::next_button_Click);
 			// 
 			// remove_button
 			// 
@@ -154,6 +138,7 @@ namespace GuiWithLinkedLists {
 			this->left_pic->Location = System::Drawing::Point(107, 119);
 			this->left_pic->Name = L"left_pic";
 			this->left_pic->Size = System::Drawing::Size(102, 88);
+			this->left_pic->SizeMode = System::Windows::Forms::PictureBoxSizeMode::StretchImage;
 			this->left_pic->TabIndex = 9;
 			this->left_pic->TabStop = false;
 			// 
@@ -162,6 +147,7 @@ namespace GuiWithLinkedLists {
 			this->right_pic->Location = System::Drawing::Point(504, 119);
 			this->right_pic->Name = L"right_pic";
 			this->right_pic->Size = System::Drawing::Size(102, 88);
+			this->right_pic->SizeMode = System::Windows::Forms::PictureBoxSizeMode::StretchImage;
 			this->right_pic->TabIndex = 10;
 			this->right_pic->TabStop = false;
 			// 
@@ -170,6 +156,7 @@ namespace GuiWithLinkedLists {
 			this->center_pic->Location = System::Drawing::Point(255, 82);
 			this->center_pic->Name = L"center_pic";
 			this->center_pic->Size = System::Drawing::Size(201, 202);
+			this->center_pic->SizeMode = System::Windows::Forms::PictureBoxSizeMode::StretchImage;
 			this->center_pic->TabIndex = 11;
 			this->center_pic->TabStop = false;
 			// 
@@ -189,16 +176,12 @@ namespace GuiWithLinkedLists {
 			this->Controls->Add(this->remove_button);
 			this->Controls->Add(this->next_button);
 			this->Controls->Add(this->previous_button);
-			this->Controls->Add(this->label2);
-			this->Controls->Add(this->label1);
 			this->Name = L"MyForm";
 			this->Text = L"MyForm";
-			this->Load += gcnew System::EventHandler(this, &MyForm::MyForm_Load);
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->left_pic))->EndInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->right_pic))->EndInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->center_pic))->EndInit();
 			this->ResumeLayout(false);
-			this->PerformLayout();
 
 		}
 #pragma endregion
@@ -216,10 +199,19 @@ std::string s2s(System::String^ str)
 
 
 private: System::Void add_button_Click(System::Object^  sender, System::EventArgs^  e) {
-	PictureNode *temp_node = new PictureNode;
 	if (openFileDialog1->ShowDialog() == System::Windows::Forms::DialogResult::Cancel)
 		return;
-	temp_node->picturePath = s2s(this->openFileDialog1->FileName);
+	picture_list.insert(current_position, s2s(this->openFileDialog1->FileName));
+	current_position++;
+	right_pic->ImageLocation = center_pic->ImageLocation;
+	center_pic->ImageLocation = s2s(picture_list.get(current_position));
+	
+}
+private: System::Void next_button_Click(System::Object^  sender, System::EventArgs^  e) {
+	current_position++;
+	left_pic->ImageLocation = s2s(picture_list.get(current_position));
+	center_pic->ImageLocation = s2s(picture_list.get(current_position + 1));
+	right_pic->ImageLocation = s2s(picture_list.get(current_position + 2));
 
 }
 };

@@ -1,5 +1,5 @@
 #include "LinkedList.h"
-#include "MyForm.h"
+
 
 
 
@@ -101,7 +101,7 @@ int LinkedList::size() //returns the size of the list
 			start = start->next; //move the pointer through the linked list
 		}
 	}
-
+	return number_of_pictures;
 }
 std::string  LinkedList::get(int pos)//returns the path of a picture at a position
 {
