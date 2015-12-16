@@ -29,7 +29,9 @@ namespace GuiWithLinkedLists {
 		}
 	private:
 	LinkedList picture_list;
-	int current_position = 0;
+	private: System::Windows::Forms::TextBox^  textBox1;
+	private: System::Windows::Forms::CheckBox^  checkBox1;
+			 int current_position = 0;
 
 	protected:
 		/// <summary>
@@ -90,6 +92,8 @@ namespace GuiWithLinkedLists {
 			this->right_pic = (gcnew System::Windows::Forms::PictureBox());
 			this->center_pic = (gcnew System::Windows::Forms::PictureBox());
 			this->openFileDialog1 = (gcnew System::Windows::Forms::OpenFileDialog());
+			this->textBox1 = (gcnew System::Windows::Forms::TextBox());
+			this->checkBox1 = (gcnew System::Windows::Forms::CheckBox());
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->left_pic))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->right_pic))->BeginInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->center_pic))->BeginInit();
@@ -103,6 +107,7 @@ namespace GuiWithLinkedLists {
 			this->previous_button->TabIndex = 5;
 			this->previous_button->Text = L"Previous";
 			this->previous_button->UseVisualStyleBackColor = true;
+			this->previous_button->Click += gcnew System::EventHandler(this, &MyForm::previous_button_Click);
 			// 
 			// next_button
 			// 
@@ -122,6 +127,7 @@ namespace GuiWithLinkedLists {
 			this->remove_button->TabIndex = 7;
 			this->remove_button->Text = L"Remove";
 			this->remove_button->UseVisualStyleBackColor = true;
+			this->remove_button->Click += gcnew System::EventHandler(this, &MyForm::remove_button_Click);
 			// 
 			// add_button
 			// 
@@ -164,11 +170,33 @@ namespace GuiWithLinkedLists {
 			// 
 			this->openFileDialog1->FileName = L"openFileDialog1";
 			// 
+			// textBox1
+			// 
+			this->textBox1->Location = System::Drawing::Point(124, 379);
+			this->textBox1->Multiline = true;
+			this->textBox1->Name = L"textBox1";
+			this->textBox1->Size = System::Drawing::Size(468, 126);
+			this->textBox1->TabIndex = 12;
+			// 
+			// checkBox1
+			// 
+			this->checkBox1->AutoSize = true;
+			this->checkBox1->Location = System::Drawing::Point(28, 379);
+			this->checkBox1->Name = L"checkBox1";
+			this->checkBox1->Size = System::Drawing::Size(72, 17);
+			this->checkBox1->TabIndex = 13;
+			this->checkBox1->Text = L"Check list";
+			this->checkBox1->UseVisualStyleBackColor = true;
+			this->checkBox1->CheckedChanged += gcnew System::EventHandler(this, &MyForm::checkBox1_CheckedChanged);
+			// 
 			// MyForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-			this->ClientSize = System::Drawing::Size(701, 461);
+			this->AutoScroll = true;
+			this->ClientSize = System::Drawing::Size(701, 556);
+			this->Controls->Add(this->checkBox1);
+			this->Controls->Add(this->textBox1);
 			this->Controls->Add(this->center_pic);
 			this->Controls->Add(this->right_pic);
 			this->Controls->Add(this->left_pic);
@@ -182,6 +210,7 @@ namespace GuiWithLinkedLists {
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->right_pic))->EndInit();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->center_pic))->EndInit();
 			this->ResumeLayout(false);
+			this->PerformLayout();
 
 		}
 #pragma endregion
@@ -203,16 +232,49 @@ private: System::Void add_button_Click(System::Object^  sender, System::EventArg
 		return;
 	picture_list.insert(current_position, s2s(this->openFileDialog1->FileName));
 	current_position++;
+	left_pic->ImageLocation = center_pic->ImageLocation;
+	center_pic->ImageLocation = right_pic->ImageLocation;
+	right_pic->ImageLocation = s2s(picture_list.get(current_position));
+
+	/*picture_list.insert(current_position, s2s(this->openFileDialog1->FileName));
+	current_position++;
 	right_pic->ImageLocation = center_pic->ImageLocation;
-	center_pic->ImageLocation = s2s(picture_list.get(current_position));
+	center_pic->ImageLocation = s2s(picture_list.get(current_position));*/
+	
 	
 }
 private: System::Void next_button_Click(System::Object^  sender, System::EventArgs^  e) {
 	current_position++;
-	left_pic->ImageLocation = s2s(picture_list.get(current_position));
-	center_pic->ImageLocation = s2s(picture_list.get(current_position + 1));
-	right_pic->ImageLocation = s2s(picture_list.get(current_position + 2));
+	left_pic->ImageLocation = center_pic->ImageLocation;
+	center_pic->ImageLocation = right_pic->ImageLocation;
+	right_pic->ImageLocation = s2s(picture_list.get(current_position));
+	
+	
+	
 
+}
+
+private: System::Void checkBox1_CheckedChanged(System::Object^  sender, System::EventArgs^  e) {
+	
+	textBox1->Text = s2s(picture_list.printPictures());
+}
+private: System::Void remove_button_Click(System::Object^  sender, System::EventArgs^  e) {
+	left_pic->ImageLocation = center_pic->ImageLocation;
+	center_pic->ImageLocation = right_pic->ImageLocation;
+	picture_list.remove(current_position);
+	right_pic->ImageLocation = s2s(picture_list.get(current_position));
+	
+	/*picture_list.remove(current_position);
+	right_pic->ImageLocation = center_pic->ImageLocation;
+	center_pic->ImageLocation = left_pic->ImageLocation;
+	left_pic->ImageLocation = s2s(picture_list.get(current_position));*/
+
+}
+private: System::Void previous_button_Click(System::Object^  sender, System::EventArgs^  e) {
+	current_position--; 
+	right_pic->ImageLocation = center_pic->ImageLocation;
+	center_pic->ImageLocation = left_pic->ImageLocation;
+	left_pic->ImageLocation = s2s(picture_list.get(current_position));
 }
 };
 }

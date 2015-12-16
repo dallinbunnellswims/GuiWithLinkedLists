@@ -20,4 +20,5 @@ public:
 	void set(int pos, std::string value); // Sets a position in list
 	int size(); // The number of elements stored in the list
 	PictureNode * walkToPosition(int position);
+	std::string printPictures();
 };

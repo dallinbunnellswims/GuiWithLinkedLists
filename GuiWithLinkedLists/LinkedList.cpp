@@ -25,7 +25,6 @@ void LinkedList::insert(int pos, std::string path)//inserts a picture at a given
 	//create a new picture and give it some data
 	PictureNode *insertedPicture = new PictureNode;
 	insertedPicture->picturePath = path;
-	insertedPicture->next = 0;
 	//we need another pointer to the picture at the position before where we want to insert
 	//so walk to that position and assign that position to a new pointer
 	PictureNode *picture_at_pos = walkToPosition(pos);
@@ -81,6 +80,10 @@ void LinkedList::remove(int pos)//removes a picture at a position
 		one_to_remove->prev->next = 0;
 		delete one_to_remove;
 	}
+	else
+	{
+		
+	}
 	
 }
 void LinkedList::set(int pos, std::string value) //sets a new path to a picure at a certain position
@@ -105,15 +108,33 @@ int LinkedList::size() //returns the size of the list
 }
 std::string  LinkedList::get(int pos)//returns the path of a picture at a position
 {
-	PictureNode *pic = walkToPosition(pos);
+	PictureNode *pic = new PictureNode;
+	pic->picturePath = walkToPosition(pos)->picturePath;
 	return pic->picturePath;
+}
+std::string LinkedList::printPictures() 
+{
+	PictureNode *position = new PictureNode;
+	position = head;
+	std::string output = "";
+	if (position != 0)
+	{ //Makes sure there is a place to start
+		while (position->next != 0)
+		{
+			output += position->picturePath + "\r\n";
+			position = position->next;
+		}
+		output += position->picturePath;
+		return output;
+	}
 }
 PictureNode * LinkedList::walkToPosition(int position) 
 //creates a pointer to a temporary position and travels to a desired position.
 //so we don't have to get to the postions in each method. returns that position.
 {
 	int tmp_pos = 0;
-	PictureNode *tmp_node = head; //start at the start
+	PictureNode *tmp_node = new PictureNode;
+	tmp_node = head; //start at the start
 	while (tmp_pos < position) //while tmp_pos is not 0
 	{
 		tmp_pos++; //increment
