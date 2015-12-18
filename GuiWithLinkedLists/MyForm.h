@@ -32,6 +32,7 @@ namespace GuiWithLinkedLists {
 	private: System::Windows::Forms::TextBox^  textBox1;
 	private: System::Windows::Forms::CheckBox^  checkBox1;
 			 int current_position = 0;
+			 int next_clicks = 0;
 
 	protected:
 		/// <summary>
@@ -230,27 +231,23 @@ std::string s2s(System::String^ str)
 private: System::Void add_button_Click(System::Object^  sender, System::EventArgs^  e) {
 	if (openFileDialog1->ShowDialog() == System::Windows::Forms::DialogResult::Cancel)
 		return;
-	picture_list.insert(current_position, s2s(this->openFileDialog1->FileName));
-	current_position++;
+	/*picture_list.insert(current_position, s2s(this->openFileDialog1->FileName));
 	left_pic->ImageLocation = center_pic->ImageLocation;
 	center_pic->ImageLocation = right_pic->ImageLocation;
-	right_pic->ImageLocation = s2s(picture_list.get(current_position));
+	right_pic->ImageLocation = s2s(picture_list.get(current_position));*/
 
-	/*picture_list.insert(current_position, s2s(this->openFileDialog1->FileName));
-	current_position++;
+	picture_list.insert(current_position, s2s(this->openFileDialog1->FileName));
+	current_position = (picture_list.size()) + 1;
 	right_pic->ImageLocation = center_pic->ImageLocation;
-	center_pic->ImageLocation = s2s(picture_list.get(current_position));*/
+	center_pic->ImageLocation = s2s(picture_list.get(current_position));
 	
 	
 }
 private: System::Void next_button_Click(System::Object^  sender, System::EventArgs^  e) {
-	current_position++;
+	next_clicks++;
 	left_pic->ImageLocation = center_pic->ImageLocation;
 	center_pic->ImageLocation = right_pic->ImageLocation;
-	right_pic->ImageLocation = s2s(picture_list.get(current_position));
-	
-	
-	
+	right_pic->ImageLocation = s2s(picture_list.get(current_position - (next_clicks+3)));
 
 }
 
@@ -259,16 +256,11 @@ private: System::Void checkBox1_CheckedChanged(System::Object^  sender, System::
 	textBox1->Text = s2s(picture_list.printPictures());
 }
 private: System::Void remove_button_Click(System::Object^  sender, System::EventArgs^  e) {
-	left_pic->ImageLocation = center_pic->ImageLocation;
-	center_pic->ImageLocation = right_pic->ImageLocation;
+	//left_pic->ImageLocation = center_pic->ImageLocation;
 	picture_list.remove(current_position);
+	center_pic->ImageLocation = right_pic->ImageLocation;
 	right_pic->ImageLocation = s2s(picture_list.get(current_position));
 	
-	/*picture_list.remove(current_position);
-	right_pic->ImageLocation = center_pic->ImageLocation;
-	center_pic->ImageLocation = left_pic->ImageLocation;
-	left_pic->ImageLocation = s2s(picture_list.get(current_position));*/
-
 }
 private: System::Void previous_button_Click(System::Object^  sender, System::EventArgs^  e) {
 	current_position--; 
